@@ -37,7 +37,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
       child: Stack(
         children: [
           _PokemonGrid(),
-          _FabMenu(),
+          // _FabMenu(),
         ],
       ),
     );

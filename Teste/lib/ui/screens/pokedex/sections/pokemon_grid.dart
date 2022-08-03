@@ -37,7 +37,8 @@ class _PokemonGridState extends State<_PokemonGrid> {
 
     if (innerController == null || !innerController.hasClients) return;
 
-    final thresholdReached = innerController.position.extentAfter < _endReachedThreshold;
+    final thresholdReached =
+        innerController.position.extentAfter < _endReachedThreshold;
 
     if (thresholdReached) {
       // Load more!
@@ -48,7 +49,8 @@ class _PokemonGridState extends State<_PokemonGrid> {
   Future _onRefresh() async {
     pokemonBloc.add(PokemonLoadStarted());
 
-    return pokemonBloc.stream.firstWhere((e) => e.status != PokemonStateStatus.loading);
+    return pokemonBloc.stream
+        .firstWhere((e) => e.status != PokemonStateStatus.loading);
   }
 
   void _onPokemonPress(Pokemon pokemon) {

@@ -4,7 +4,8 @@ import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/states/pokemon/pokemon_bloc.dart';
 import 'package:pokedex/states/pokemon/pokemon_state.dart';
 
-class PokemonStateSelector<T> extends BlocSelector<PokemonBloc, PokemonState, T> {
+class PokemonStateSelector<T>
+    extends BlocSelector<PokemonBloc, PokemonState, T> {
   PokemonStateSelector({
     required T Function(PokemonState) selector,
     required Widget Function(T) builder,
@@ -14,7 +15,8 @@ class PokemonStateSelector<T> extends BlocSelector<PokemonBloc, PokemonState, T>
         );
 }
 
-class PokemonStateStatusSelector extends PokemonStateSelector<PokemonStateStatus> {
+class PokemonStateStatusSelector
+    extends PokemonStateSelector<PokemonStateStatus> {
   PokemonStateStatusSelector(Widget Function(PokemonStateStatus) builder)
       : super(
           selector: (state) => state.status,
@@ -33,7 +35,7 @@ class PokemonCanLoadMoreSelector extends PokemonStateSelector<bool> {
 class NumberOfPokemonsSelector extends PokemonStateSelector<int> {
   NumberOfPokemonsSelector(Widget Function(int) builder)
       : super(
-          selector: (state) => 0,
+          selector: (state) => state.pokemons.length,
           builder: builder,
         );
 }
@@ -65,5 +67,7 @@ class PokemonSelectorState {
 
   @override
   bool operator ==(Object other) =>
-      other is PokemonSelectorState && pokemon == other.pokemon && selected == other.selected;
+      other is PokemonSelectorState &&
+      pokemon == other.pokemon &&
+      selected == other.selected;
 }

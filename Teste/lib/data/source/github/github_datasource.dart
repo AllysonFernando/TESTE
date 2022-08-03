@@ -21,16 +21,15 @@ class GithubDataSource {
     final data = (json.decode(response.data) as List)
         .map((item) => GithubPokemonModel.fromJson(item))
         .toList();
-
     return data;
   }
 
   Future<List<GithubItemModel>> getItems() async {
     final response = await networkManager.request(RequestMethod.get, itemsURL);
 
-    final data =
-        (json.decode(response.data) as List).map((item) => GithubItemModel.fromJson(item)).toList();
-
+    final data = (json.decode(response.data) as List)
+        .map((item) => GithubItemModel.fromJson(item))
+        .toList();
     return data;
   }
 }

@@ -13,7 +13,8 @@ abstract class PokemonRepository {
 }
 
 class PokemonDefaultRepository extends PokemonRepository {
-  PokemonDefaultRepository({required this.githubDataSource, required this.localDataSource});
+  PokemonDefaultRepository(
+      {required this.githubDataSource, required this.localDataSource});
 
   final GithubDataSource githubDataSource;
   final LocalDataSource localDataSource;
@@ -30,14 +31,14 @@ class PokemonDefaultRepository extends PokemonRepository {
     }
 
     final pokemonHiveModels = await localDataSource.getAllPokemons();
-
     final pokemonEntities = pokemonHiveModels.map((e) => e.toEntity()).toList();
 
     return pokemonEntities;
   }
 
   @override
-  Future<List<Pokemon>> getPokemons({required int limit, required int page}) async {
+  Future<List<Pokemon>> getPokemons(
+      {required int limit, required int page}) async {
     final hasCachedData = await localDataSource.hasData();
 
     if (!hasCachedData) {
@@ -59,8 +60,8 @@ class PokemonDefaultRepository extends PokemonRepository {
   @override
   Future<Pokemon?> getPokemon(String number) async {
     final pokemonModel = await localDataSource.getPokemon(number);
-
     if (pokemonModel == null) return null;
+    print(pokemonModel);
 
     // get all evolutions
     final evolutions = await localDataSource.getEvolutions(pokemonModel);
