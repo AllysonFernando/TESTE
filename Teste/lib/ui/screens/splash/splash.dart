@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     scheduleMicrotask(() async {
       await AppImages.precacheAssets(context);
-      await Future.delayed(Duration(milliseconds: 6000));
+      await Future.delayed(Duration(milliseconds: 0));
       await AppNavigator.replaceWith(Routes.home);
     });
 
