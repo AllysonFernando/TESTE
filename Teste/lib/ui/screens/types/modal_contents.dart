@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/configs/images.dart';
 import 'package:pokedex/configs/types.dart';
 import 'package:pokedex/core/utils.dart';
+import 'package:pokedex/domain/entities/generation.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/routes.dart';
 import 'package:pokedex/states/pokemon/pokemon_bloc.dart';
 import 'package:pokedex/states/pokemon/pokemon_event.dart';
 import 'package:pokedex/states/pokemon/pokemon_state.dart';
+import 'package:pokedex/ui/screens/pokedex/widgets/generation_card.dart';
 import 'package:pokedex/ui/widgets/pokemon_card.dart';
 import 'package:pokedex/ui/screens/types/type_container.dart';
 import 'package:pokedex/ui/screens/types/type_entities/widget_list.dart';
@@ -82,15 +84,34 @@ class _ModalContentsState extends State<ModalContents> {
       },
       canTapOnHeader: true,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: filteredPokemons.length == 0
-                ? Text("No Pokemon found",
-                    style: TextStyle(fontSize: 16, color: Colors.black54))
-                : Text("tem Pokemon",
-                    style: TextStyle(fontSize: 16, color: Colors.black54))),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: filteredPokemons.length == 0
+                  ? Text("No Pokemon found",
+                      style: TextStyle(fontSize: 16, color: Colors.black54))
+                  : Container(
+                      width: double.maxFinite,
+                      // height: 150,
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1.4,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
+                          itemCount: filteredPokemons.length,
+                          itemBuilder: (ctx, int index) {
+                            print(filteredPokemons[index].name);
+                            print(filteredPokemons.length);
+                            return PokemonCard(
+                              filteredPokemons[index],
+                              onPress: () => _onPokemonPress(
+                                  index, filteredPokemons[index]),
+                            );
+                          }),
+                    ))),
       isExpanded: _isOpen[0],
     );
   }
