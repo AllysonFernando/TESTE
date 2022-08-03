@@ -44,7 +44,9 @@ class _ModalContentsState extends State<ModalContents> {
   }
 
   void _onPokemonPress(int index, Pokemon pokemon) {
-    context.read<PokemonBloc>().add(PokemonSelectChanged(pokemonId: pokemon.number));
+    context
+        .read<PokemonBloc>()
+        .add(PokemonSelectChanged(pokemonId: pokemon.number));
 
     AppNavigator.push(Routes.pokemonInfo, pokemon);
   }
@@ -52,8 +54,9 @@ class _ModalContentsState extends State<ModalContents> {
   PokeTypes get pokeType => types[widget.index];
 
   ExpansionPanel _buildTypePokemonPanel(List<Pokemon> pokemons) {
-    final filteredPokemons =
-        pokemons.where((pokemon) => pokemon.types.contains(pokeType.type)).toList();
+    final filteredPokemons = pokemons
+        .where((pokemon) => pokemon.types.contains(pokeType.type))
+        .toList();
 
     return ExpansionPanel(
       headerBuilder: (context, isOpen) {
@@ -81,9 +84,12 @@ class _ModalContentsState extends State<ModalContents> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
-          child: Text("No Pokemon found", style: TextStyle(fontSize: 16, color: Colors.black54)),
-        ),
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: filteredPokemons.length == 0
+                ? Text("No Pokemon found",
+                    style: TextStyle(fontSize: 16, color: Colors.black54))
+                : Text("tem Pokemon",
+                    style: TextStyle(fontSize: 16, color: Colors.black54))),
       ),
       isExpanded: _isOpen[0],
     );
@@ -168,21 +174,25 @@ class _ModalContentsState extends State<ModalContents> {
         if (pokeType.superEffective.isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: lister(widget.index, 2, widget.width, "Effective Against".toUpperCase()),
+            children: lister(widget.index, 2, widget.width,
+                "Effective Against".toUpperCase()),
           ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: lister(widget.index, 0.5, widget.width, "Weak Against".toUpperCase()),
+          children: lister(
+              widget.index, 0.5, widget.width, "Weak Against".toUpperCase()),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: lister(widget.index, 1, widget.width, "Normal Against".toUpperCase()),
+          children: lister(
+              widget.index, 1, widget.width, "Normal Against".toUpperCase()),
         ),
         if (pokeType.nilEffective.isNotEmpty)
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: lister(widget.index, 0, widget.width, "No Effect Against".toUpperCase()),
+            children: lister(widget.index, 0, widget.width,
+                "No Effect Against".toUpperCase()),
           ),
         BlocBuilder<PokemonBloc, PokemonState>(builder: (_, state) {
           if (state.error != null) {
